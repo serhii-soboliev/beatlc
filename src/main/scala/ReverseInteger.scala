@@ -1,4 +1,4 @@
-package org.sbk
+package org.sbk.leet
 
 object ReverseInteger {
 
