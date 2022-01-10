@@ -8,19 +8,25 @@ https://leetcode.com/problems/minimum-height-trees/
  */
 class MinimalHeightTree {
     def findMinHeightTrees(n: Int, edges: Array[Array[Int]]): List[Int] = {
-        val edgesMap = buildEdgesMap(n, edges)
-        findDiameter(edgesMap)
-        null
+        val d = findDiameter(n, edges)
+        if(d.length % 2 == 0)
+             List(d(d.length / 2 - 1), d(d.length / 2 ))
+        else List(d(d.length / 2))
+
     }
 
-    def findDiameter(edgesMap: Array[ArrayBuffer[Int]]) : Int = {
-        val firstVertex = 0
+    def findDiameter(n: Int, edges: Array[Array[Int]]) : Array[Int] = {
+        val firstLongestPath = findLongestPathFromVertex(n, 0, edges)
+        val diameter = findLongestPathFromVertex(n, firstLongestPath.last, edges)
+        diameter
+    }
+
+    def findLongestPathFromVertex(n: Int, firstVertex:Int, edges: Array[Array[Int]]): Array[Int] = {
         val paths = ArrayBuffer(ArrayBuffer(firstVertex))
-        val allPaths = findAllPathsFromVertex(paths, edgesMap)
-        0
+        findAllPaths(paths, buildEdgesMap(n, edges)).sortBy(_.length)(Ordering[Int].reverse).last.toArray
     }
 
-    def findAllPathsFromVertex(paths: ArrayBuffer[ArrayBuffer[Int]], edgesMap: Array[ArrayBuffer[Int]]) : ArrayBuffer[ArrayBuffer[Int]] ={
+    def findAllPaths(paths: ArrayBuffer[ArrayBuffer[Int]], edgesMap: Array[ArrayBuffer[Int]]) : ArrayBuffer[ArrayBuffer[Int]] ={
         val newPaths:ArrayBuffer[ArrayBuffer[Int]] = ArrayBuffer()
         for(path <- paths) {
             val accessibleVertexes = edgesMap(path.last)
@@ -35,7 +41,7 @@ class MinimalHeightTree {
         if(newPaths.nonEmpty) {
             paths.clear()
             paths.addAll(newPaths)
-            findAllPathsFromVertex(paths, edgesMap)
+            findAllPaths(paths, edgesMap)
         }
         paths
     }
@@ -56,7 +62,8 @@ class MinimalHeightTree {
 object MinimalHeightTree {
     def main(args: Array[String]): Unit = {
         val o = new MinimalHeightTree
-       // o.findMinHeightTrees(4, Array(Array(1, 0), Array(2, 0), Array(3, 1), Array(3, 2), Array(2,1)))
-        o.findMinHeightTrees(4, Array(Array(1, 0), Array(1, 2), Array(3, 1)))
+        print(o.findMinHeightTrees(3, Array(Array(0,1), Array(0,2))))
+       // print(o.findMinHeightTrees(6, Array(Array(3, 0), Array(3, 1), Array(3, 2), Array(3, 4), Array(5,4))))
+       // print(o.findMinHeightTrees(4, Array(Array(1, 0), Array(1, 2), Array(1,3))))
     }
 }
