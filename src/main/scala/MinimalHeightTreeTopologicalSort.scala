@@ -10,27 +10,31 @@ class MinimalHeightTreeTopologicalSort {
     var leaves = findLeaves(edgesMap)
     var vertexesLeft = n
     while (vertexesLeft > 2) {
-      vertexesLeft -= leaves.length
-      removeLeaves(leaves, edgesMap)
-      leaves = findLeaves(edgesMap)
+      vertexesLeft -= leaves.size
+      leaves = removeLeaves(leaves, edgesMap)
     }
-    leaves
+    leaves.toList
   }
 
-  private def removeLeaves(leaves: List[Int], edgesMap: mutable.Map[Int, ArrayBuffer[Int]]): Unit = {
+  private def removeLeaves(leaves: mutable.Set[Int], edgesMap: mutable.Map[Int, ArrayBuffer[Int]]): mutable.Set[Int] = {
+    val newLeaves = mutable.Set[Int]()
     for(leaf <- leaves) {
       for(v <- edgesMap(leaf)) {
         edgesMap(v) -= leaf
+        if(edgesMap(v).length <= 1) {
+          newLeaves += v
+        }
       }
       edgesMap.remove(leaf)
     }
+    newLeaves
   }
 
-  private def findLeaves(edgesMap: mutable.Map[Int, ArrayBuffer[Int]]) : List[Int] = {
+  private def findLeaves(edgesMap: mutable.Map[Int, ArrayBuffer[Int]]) : mutable.Set[Int] = {
     edgesMap
       .filter(v => v._2.length <= 1)
       .keySet
-      .toList
+      .to(collection.mutable.Set)
   }
 
   private def buildEdgesMap(n: Int, edges: Array[Array[Int]]): mutable.Map[Int, ArrayBuffer[Int]] = {
