@@ -1,55 +1,52 @@
 package org.sbk.leet
 
 import scala.collection.mutable
-import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable._
 
 class MinimalHeightTreeTopologicalSort {
 
   def findMinHeightTrees(n: Int, edges: Array[Array[Int]]): List[Int] = {
-    val edgesMap = buildEdgesMap(n,edges)
-    var leaves = findLeaves(edgesMap)
-    var vertexesLeft = n
-    while (vertexesLeft > 2) {
-      vertexesLeft -= leaves.size
-      leaves = removeLeaves(leaves, edgesMap)
-    }
-    leaves.toList
-  }
 
-  private def removeLeaves(leaves: mutable.Set[Int], edgesMap: mutable.Map[Int, ArrayBuffer[Int]]): mutable.Set[Int] = {
-    val newLeaves = mutable.Set[Int]()
-    for(leaf <- leaves) {
-      for(v <- edgesMap(leaf)) {
-        edgesMap(v) -= leaf
-        if(edgesMap(v).length <= 1) {
-          newLeaves += v
-        }
+    if (n == 1)
+      return List(0)
+
+    val graph = mutable.Map[Int, ListBuffer[Int]]()
+    val ans = ListBuffer[Int]()
+
+    for { node <- edges } {
+      val tmp1 = graph.getOrElse(node(0), ListBuffer[Int]())
+      tmp1 += node(1)
+      val tmp2 = graph.getOrElse(node(1), ListBuffer[Int]())
+      tmp2 += node(0)
+      graph += (node(0) -> tmp1)
+      graph += (node(1) -> tmp2)
+    }
+
+    val leaves = graph
+      .filter(_._2.length == 1)
+      .keys
+      .toList
+
+    val noOfNodes = n
+    val res = graph.foldLeft((noOfNodes, leaves))((tmpRes, _) => {
+      tmpRes._1 match {
+        case n if n <= 2 => (tmpRes._1, tmpRes._2)
+        case n =>
+          val newLeaves = ListBuffer[Int]()
+
+          for (leaf <- tmpRes._2) {
+            val parentNode = graph(leaf).head
+            graph(parentNode).subtractOne(leaf)
+            if (graph(parentNode).length == 1)
+              newLeaves += parentNode
+          }
+          (tmpRes._1 - tmpRes._2.length, newLeaves.toList)
       }
-      edgesMap.remove(leaf)
-    }
-    newLeaves
+    })
+
+    res._2
   }
 
-  private def findLeaves(edgesMap: mutable.Map[Int, ArrayBuffer[Int]]) : mutable.Set[Int] = {
-    edgesMap
-      .filter(v => v._2.length <= 1)
-      .keySet
-      .to(collection.mutable.Set)
-  }
-
-  private def buildEdgesMap(n: Int, edges: Array[Array[Int]]): mutable.Map[Int, ArrayBuffer[Int]] = {
-    val r = mutable.Map[Int, ArrayBuffer[Int]]()
-    for (i <- 0 until n) {
-      r(i) = ArrayBuffer[Int]()
-    }
-    for(e <- edges) {
-      val v1 = e(0)
-      val v2 = e(1)
-      r(v1) += v2
-      r(v2) += v1
-    }
-    r
-  }
 
 }
 
