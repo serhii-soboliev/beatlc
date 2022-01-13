@@ -35,7 +35,7 @@ class MinimalHeightTreeTopologicalSort {
     val res = graph.foldLeft((noOfNodes, leaves))((tmpRes, _) => {
       tmpRes._1 match {
         case n if n <= 2 => (tmpRes._1, tmpRes._2)
-        case n =>
+        case _ =>
           val newLeaves = ListBuffer[Int]()
 
           for (leaf <- tmpRes._2) {
