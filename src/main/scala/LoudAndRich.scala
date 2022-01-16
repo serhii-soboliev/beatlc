@@ -10,7 +10,7 @@ import scala.collection.mutable.ArrayBuffer
  */
 class LoudAndRich {
 
-  def loudAndRichDFS(richer: Array[Array[Int]], quiet: Array[Int]): Array[Int] = {
+  def loudAndRich(richer: Array[Array[Int]], quiet: Array[Int]): Array[Int] = {
     val n = quiet.length
     val ans = Array.fill[Int](n)(-1)
 
@@ -30,7 +30,7 @@ class LoudAndRich {
       if(ans(node) == -1) {
         ans(node) = node
         for(child <- graph(node)) {
-          val candidate = dfs(child)
+          val candidate = if(ans(child) == -1) dfs(child) else ans(child)
           if(quiet(candidate) < quiet(ans(node))) {
             ans(node) = candidate
           }
