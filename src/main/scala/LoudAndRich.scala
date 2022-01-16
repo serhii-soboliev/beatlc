@@ -12,17 +12,15 @@ class LoudAndRich {
 
   def loudAndRich(richer: Array[Array[Int]], quiet: Array[Int]): Array[Int] = {
     val n = quiet.length
-    val graph =  Array.fill[ArrayBuffer[Int]](n)(ArrayBuffer.empty[Int])
     val revGraph = Array.fill[ArrayBuffer[Int]](n)(ArrayBuffer.empty[Int])
     val ans = Array.fill[Int](n)(0)
 
     def buildGraphs():Unit = {
-      for (r <- richer) {
-        val a = r(0)
-        val b = r(1)
-        graph(a) += b
-        revGraph(b) += a
-      }
+      richer foreach(
+        r => {
+          revGraph(r(1)) += r(0)
+        }
+      )
     }
 
     def buildAns(): Unit = {
@@ -55,7 +53,6 @@ class LoudAndRich {
           bfs(newRicher)
         }
       }
-
       richerThanI
     }
 
