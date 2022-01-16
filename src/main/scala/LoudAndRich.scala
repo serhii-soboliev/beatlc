@@ -10,6 +10,45 @@ import scala.collection.mutable.ArrayBuffer
  */
 class LoudAndRich {
 
+  def loudAndRichDFS(richer: Array[Array[Int]], quiet: Array[Int]): Array[Int] = {
+    val n = quiet.length
+    val ans = Array.fill[Int](n)(-1)
+
+    def buildGraph():Array[ArrayBuffer[Int]] = {
+      val g = Array.fill[ArrayBuffer[Int]](n)(ArrayBuffer.empty[Int])
+      richer foreach(
+          r => {
+            g(r(1)) += r(0)
+          }
+        )
+      g
+    }
+
+    val graph = buildGraph()
+
+    def dfs(node: Int): Int = {
+      if(ans(node) == -1) {
+        ans(node) = node
+        for(child <- graph(node)) {
+          val candidate = dfs(child)
+          if(quiet(candidate) < quiet(ans(node))) {
+            ans(node) = candidate
+          }
+        }
+      }
+      ans(node)
+    }
+
+    def findAnswer(): Unit = {
+      for(i <- 0 until n) {
+        dfs(i)
+      }
+    }
+
+    findAnswer()
+    ans
+  }
+
   def loudAndRichTopologicalSort(richer: Array[Array[Int]], quiet: Array[Int]): Array[Int] = {
     val n = quiet.length
     val graph = Array.fill[ArrayBuffer[Int]](n)(ArrayBuffer.empty[Int])
@@ -17,7 +56,7 @@ class LoudAndRich {
     val richest = mutable.Queue[Int]()
     val ans = (0 until n).toArray
 
-    def buildGraphs():Unit = {
+    def buildGraph():Unit = {
       richer foreach(
           r => {
             graph(r(0)) += r(1)
@@ -53,7 +92,7 @@ class LoudAndRich {
       }
     }
 
-    buildGraphs()
+    buildGraph()
     initQueue()
     topSort()
     ans
