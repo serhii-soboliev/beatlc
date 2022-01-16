@@ -17,9 +17,7 @@ class LoudAndRich {
 
     def buildGraphs():Unit = {
       richer foreach(
-        r => {
-          revGraph(r(1)) += r(0)
-        }
+        r => { revGraph(r(1)) += r(0) }
       )
     }
 
@@ -34,24 +32,22 @@ class LoudAndRich {
       if(r.isEmpty) {
         ans(i) = i
       } else {
-        val m = r.map(a => quiet(a)).min
-        val ai = quiet.indexOf(m)
-        ans(i) = ai
+        ans(i) = quiet.indexOf(r.map(a => quiet(a)).min)
       }
     }
 
     def findRicherThanI(i: Int): mutable.Set[Int] = {
-      val richerThanI = mutable.Set[Int]()
-      richerThanI += i
+      val richerThanI = mutable.Set(i)
       bfs(richerThanI)
 
       @tailrec
       def bfs(r: mutable.Set[Int]): Unit = {
-        if(r.nonEmpty) {
-          val newRicher = r.flatMap(e => revGraph(e))
-          richerThanI.addAll(newRicher)
-          bfs(newRicher)
+        if(r.isEmpty) {
+          return
         }
+        val newRicher = r.flatMap(e => revGraph(e))
+        richerThanI.addAll(newRicher)
+        bfs(newRicher)
       }
       richerThanI
     }
