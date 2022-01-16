@@ -13,23 +13,23 @@ class LoudAndRich {
   def loudAndRichTopologicalSort(richer: Array[Array[Int]], quiet: Array[Int]): Array[Int] = {
     val n = quiet.length
     val graph = Array.fill[ArrayBuffer[Int]](n)(ArrayBuffer.empty[Int])
-    val indegree = Array.fill[Int](n)(0)
-    val queue = mutable.Queue[Int]()
+    val howManyRicherExists = Array.fill[Int](n)(0)
+    val richest = mutable.Queue[Int]()
     val ans = (0 until n).toArray
 
     def buildGraphs():Unit = {
       richer foreach(
           r => {
             graph(r(0)) += r(1)
-            indegree(r(1)) += 1
+            howManyRicherExists(r(1)) += 1
           }
         )
     }
 
     def initQueue(): Unit = {
       for(i <- 0 until n) {
-        if(indegree(i) == 0) {
-          queue += i
+        if(howManyRicherExists(i) == 0) {
+          richest += i
         }
       }
     }
@@ -39,15 +39,15 @@ class LoudAndRich {
     }
 
     def topSort() : Unit = {
-      while(queue.nonEmpty)  {
-        val ele = queue.dequeue()
+      while(richest.nonEmpty)  {
+        val ele = richest.dequeue()
         for (neighbor <- graph(ele)) {
           if(isMoreQuiet(neighbor, ele)) {
             ans(neighbor) = ans(ele)
           }
-          indegree(neighbor) -= 1
-          if(indegree(neighbor) == 0) {
-            queue += neighbor
+          howManyRicherExists(neighbor) -= 1
+          if(howManyRicherExists(neighbor) == 0) {
+            richest += neighbor
           }
         }
       }
