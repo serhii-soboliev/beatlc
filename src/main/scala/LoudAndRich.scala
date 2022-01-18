@@ -10,7 +10,7 @@ import scala.collection.mutable.ArrayBuffer
  */
 class LoudAndRich {
 
-  def loudAndRich(richer: Array[Array[Int]], quiet: Array[Int]): Array[Int] = {
+  def loudAndRichDFS(richer: Array[Array[Int]], quiet: Array[Int]): Array[Int] = {
     val n = quiet.length
     val ans = Array.fill[Int](n)(-1)
 

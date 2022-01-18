@@ -13,6 +13,15 @@ class LoudAndRichSpec  extends AnyFlatSpec {
     assert(res sameElements  Array(5, 5, 2, 5, 4, 5, 6, 7))
   }
 
+  "A loudAndRichDFS" should "return List(0, 1)" in {
+    val testInstance = new LoudAndRich
+    val res = testInstance.loudAndRichDFS(
+      Array(Array(1, 0)),
+      Array(0,1)
+    )
+    assert(res sameElements  Array(0,1))
+  }
+
   "A loudAndRichTopologicalSort" should "return List(5,5,2,5,4,5,6,7)" in {
     val testInstance = new LoudAndRich
     val res = testInstance.loudAndRichTopologicalSort(
