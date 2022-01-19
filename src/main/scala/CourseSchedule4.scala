@@ -1,6 +1,7 @@
 package org.sbk.leet
 
-import scala.collection.mutable.{ListBuffer, ArrayBuffer}
+import scala.collection.mutable
+import scala.collection.mutable._
 
 /**
  * 1462. Course Schedule IV
@@ -20,17 +21,30 @@ class CourseSchedule4 {
 
     val graph = buildGraph()
 
-    def buildAnswer(): Unit = {
-      queries foreach(q => ans += dfs(q(0), q(1)))
-    }
+    val memo = mutable.Set[(Int, Int)]()
 
     def dfs(a: Int, b: Int) : Boolean = {
+      if(memo.contains((a,b))) {
+        return true
+      }
+      val children = graph(a)
+      if(a == b || children.contains(b)) {
+        memo += Tuple2(a,b)
+        return true
+      }
+
       for(c <- graph(a)) {
-        if (c == b || dfs(c,b)) {
-           return true
-        }
+       if(dfs(c,b)) {
+         memo += Tuple2(a,b)
+         memo += Tuple2(c,b)
+         return true
+       }
       }
       false
+    }
+
+    def buildAnswer(): Unit = {
+      queries foreach(q => ans += dfs(q(0), q(1)))
     }
 
     buildAnswer()

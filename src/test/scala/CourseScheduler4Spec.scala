@@ -15,6 +15,7 @@ class CourseScheduler4Spec extends AnyFlatSpec {
     assert(res == List(false, true))
   }
 
+
   "A CourseScheduler4" should "return [false, false] " in {
     val testInstance = new CourseSchedule4
     val res = testInstance.checkIfPrerequisite(
@@ -23,6 +24,16 @@ class CourseScheduler4Spec extends AnyFlatSpec {
       Array(Array(1,0), Array(0,1))
     )
     assert(res == List(false, false))
+  }
+
+  "A CourseScheduler4" should "return [true, true] " in {
+    val testInstance = new CourseSchedule4
+    val res = testInstance.checkIfPrerequisite(
+      3,
+      Array(Array(1,2), Array(1,0), Array(2,0)),
+      Array(Array(1,0), Array(1,2))
+    )
+    assert(res == List(true, true))
   }
 
 }
