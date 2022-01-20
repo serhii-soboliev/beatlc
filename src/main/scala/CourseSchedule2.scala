@@ -6,13 +6,13 @@ import scala.collection.mutable.ArrayBuffer
 class CourseSchedule2 {
 
     def findOrder(numCourses: Int, prerequisites: Array[Array[Int]]): Array[Int] = {
-        val prepequisitesMap = buildPrerequisitesMap(numCourses, prerequisites)
+        val prerequisitesMap = buildPrerequisitesMap(numCourses, prerequisites)
         val white: mutable.Buffer[Int] = (0 until numCourses).toBuffer
         val gray: mutable.Buffer[Int] = ArrayBuffer()
         val black: mutable.Buffer[Int] = ArrayBuffer()
         try {
             for (i <- 0 until numCourses) {
-                tarianStep(i, white, gray, black, prepequisitesMap)
+                tarianStep(i, white, gray, black, prerequisitesMap)
             }
         } catch {
             case _: IllegalArgumentException => return Array.empty[Int]
