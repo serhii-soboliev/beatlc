@@ -1,7 +1,7 @@
 package org.sbk.leet
 
 import scala.collection.mutable.ArrayBuffer
-
+import scala.util.chaining._
 
 /*
   329. Longest Increasing Path in a Matrix
@@ -10,14 +10,40 @@ import scala.collection.mutable.ArrayBuffer
 class LongestIncreasingPathInAMatrix {
 
   def longestIncreasingPath(matrix: Array[Array[Int]]): Int = {
+    lazy val lengths: IndexedSeq[IndexedSeq[Lazy[Int]]] =
+      IndexedSeq.tabulate(matrix.length, matrix.headOption.map(_.length).getOrElse(0)) { (i1, j1) =>
+        Lazy {
+          Iterable((i1 - 1, j1), (i1 + 1, j1), (i1, j1 - 1), (i1, j1 + 1))
+            .collect {
+              case (i2, j2)
+                if matrix.isDefinedAt(i2)
+                  && matrix(i2).isDefinedAt(j2)
+                  && matrix(i1)(j1) < matrix(i2)(j2) =>
+                lengths(i2)(j2).get
+            }
+            .maxOption
+            .getOrElse(0)
+            .pipe(_ + 1)
+        }
+      }
+    lengths.flatten.map(_.get).maxOption.getOrElse(0)
+  }
+
+  private final class Lazy[+A](f: => A) {
+    lazy val get: A = f
+  }
+
+  private object Lazy {
+    def apply[A](f: => A) = new Lazy(f)
+  }
+
+  def longestIncreasingPathDFS(matrix: Array[Array[Int]]): Int = {
     val n = matrix.length
-    val m = matrix(0).length
+    val m = matrix.headOption.get.length
     val longestPathsMemo = Array.fill[Array[Int]](n)(Array.fill[Int](m)(-1))
 
     def dfs(i: Int, j: Int): Int = {
-      if(longestPathsMemo(i)(j) > -1) {
-        return longestPathsMemo(i)(j)
-      }
+      if(longestPathsMemo(i)(j) > -1) longestPathsMemo(i)(j)
 
       def findNeighbors(i: Int, j: Int): Array[(Int, Int)] = {
         val nei = ArrayBuffer[(Int, Int)]()
@@ -50,10 +76,11 @@ class LongestIncreasingPathInAMatrix {
     }
 
     def calculatePaths(): Unit = {
-      for (i <- 0 until n) {
-        for(j <- 0 until m) {
+      for {
+        i <- 0 until n
+        j <- 0 until m
+      } {
           dfs(i,j)
-        }
       }
     }
 
