@@ -1,11 +1,38 @@
 package org.sbk.leet
 
-
 /*
   2115. Find All Possible Recipes from Given Supplies
   https://leetcode.com/problems/find-all-possible-recipes-from-given-supplies/
  */
 class FindAllPossibleRecipeFromGivenSupplies {
+
+    def findAllRecipes(recipes: Array[String],
+                       ingredients: List[List[String]],
+                       supplies: Array[String]): List[String] = {
+        import scala.collection.mutable
+        import scala.collection.mutable._
+
+        val answer = new mutable.HashSet[String]
+        val ingredientsCopy: List[ListBuffer[String]] = ingredients.map(il => il.to(ListBuffer))
+        val suppCopy = supplies.to(mutable.HashSet)
+        val suppQueue = supplies.to(mutable.Queue)
+        while (suppQueue.nonEmpty) {
+            val supply = suppQueue.dequeue()
+            for((x,i) <- ingredientsCopy.zipWithIndex) {
+                x -= supply
+                if(x.isEmpty) {
+                    val r = recipes(i)
+                    if(!suppCopy.contains(r)) {
+                        suppCopy += r
+                        suppQueue += r
+                    }
+                    answer += recipes(i)
+                }
+
+            }
+        }
+        answer.toList
+    }
 
     def findAllRecipesTopologicalSearch(recipes: Array[String],
                                         ingredients: List[List[String]],
@@ -31,12 +58,12 @@ class FindAllPossibleRecipeFromGivenSupplies {
         while (supplyQueue.nonEmpty) {
             val supply = supplyQueue.dequeue()
             ingredientToReceipt(supply) foreach (
-                  recipe => {
-                      recipeToIngredient(recipe) -= supply
-                      if (recipeToIngredient(recipe).isEmpty) {
-                          supplyQueue += recipe
-                      }
+              recipe => {
+                  recipeToIngredient(recipe) -= supply
+                  if (recipeToIngredient(recipe).isEmpty) {
+                      supplyQueue += recipe
                   }
+              }
               )
         }
         recipeToIngredient.filterInPlace((_, v) => v.isEmpty).keySet.toList

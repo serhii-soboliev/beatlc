@@ -4,7 +4,15 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 
-class FindAllPossibleRecipeFromGivenSuppliesSpec extends AnyFlatSpec with Matchers{
+class FindAllPossibleRecipeFromGivenSuppliesSpec extends AnyFlatSpec with Matchers {
+
+    "A FindAllPossibleRecipeFromGivenSupplies" should "return List('bread','sandwitch','burger')" in {
+        val testInstance = new FindAllPossibleRecipeFromGivenSupplies
+        testInstance.findAllRecipes(Array("bread","sandwich","burger"),
+            List(List("yeast", "flour"), List("bread","meat"), List("sandwich","meat","bread")),
+            Array("yeast","flour","meat")
+        ) should contain allOf("bread", "sandwich", "burger")
+    }
 
     "A FindAllPossibleRecipeFromGivenSupplies TopologicalSearch" should "return List('bread')" in {
         val testInstance = new FindAllPossibleRecipeFromGivenSupplies
