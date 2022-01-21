@@ -17,16 +17,12 @@ class FindAllPossibleRecipeFromGivenSupplies {
         val ingredientToReceipt = new mutable.HashMap[String, ArrayBuffer[String]]
           .withDefaultValue(new ArrayBuffer[String]())
 
-
         (recipes zip ingredients).foreach {
             case (recipe, ingredients) =>
                 recipeToIngredient(recipe) = ingredients.to(ArrayBuffer)
                 ingredients foreach {
                     ingredient => {
-                        if (!ingredientToReceipt.contains(ingredient)) {
-                            ingredientToReceipt(ingredient) = new ArrayBuffer[String]()
-                        }
-                        ingredientToReceipt(ingredient) += recipe
+                        ingredientToReceipt(ingredient) :+= recipe
                     }
                 }
         }
@@ -43,8 +39,7 @@ class FindAllPossibleRecipeFromGivenSupplies {
                   }
               )
         }
-        recipeToIngredient.filterInPlace((_, v) => v.isEmpty)
-        recipeToIngredient.keySet.toList
+        recipeToIngredient.filterInPlace((_, v) => v.isEmpty).keySet.toList
     }
 
     def findAllRecipesNaive(recipes: Array[String],
