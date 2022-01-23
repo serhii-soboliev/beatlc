@@ -1,8 +1,13 @@
 package org.sbk.leet
+package topologicalsort
+
+import scala.annotation.tailrec
 
 object ReverseInteger {
 
     def reverse(x: Int): Int = {
+
+        @tailrec
         def internal(x: Int, d: scala.collection.mutable.ListBuffer[Int]): Unit = {
             if (x > 0) {
                 d.+=(x % 10)
@@ -27,6 +32,8 @@ object ReverseInteger {
 
         import scala.collection.mutable._
 
+
+        @tailrec
         def _reverse(x: Int, acc: ArrayBuffer[Int]): ArrayBuffer[Int] = x match {
             case Int.MinValue | Int.MaxValue => acc.addOne(0)
             case x if x < 10 => acc.addOne(x)

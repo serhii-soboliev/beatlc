@@ -1,4 +1,5 @@
 package org.sbk.leet
+package topologicalsort
 
 /*
   2115. Find All Possible Recipes from Given Supplies
@@ -6,9 +7,9 @@ package org.sbk.leet
  */
 class FindAllPossibleRecipeFromGivenSupplies {
 
-    def findAllRecipes(recipes: Array[String],
-                       ingredients: List[List[String]],
-                       supplies: Array[String]): List[String] = {
+    def findAllRecipesTopologicalSort2(recipes: Array[String],
+                                       ingredients: List[List[String]],
+                                       supplies: Array[String]): List[String] = {
         import scala.collection.mutable
         import scala.collection.mutable._
 

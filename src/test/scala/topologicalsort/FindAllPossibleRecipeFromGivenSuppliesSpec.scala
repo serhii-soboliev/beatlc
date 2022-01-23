@@ -1,4 +1,5 @@
 package org.sbk.leet
+package topologicalsort
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -8,7 +9,7 @@ class FindAllPossibleRecipeFromGivenSuppliesSpec extends AnyFlatSpec with Matche
 
     "A FindAllPossibleRecipeFromGivenSupplies" should "return List('bread','sandwitch','burger')" in {
         val testInstance = new FindAllPossibleRecipeFromGivenSupplies
-        testInstance.findAllRecipes(Array("bread","sandwich","burger"),
+        testInstance.findAllRecipesTopologicalSort2(Array("bread","sandwich","burger"),
             List(List("yeast", "flour"), List("bread","meat"), List("sandwich","meat","bread")),
             Array("yeast","flour","meat")
         ) should contain allOf("bread", "sandwich", "burger")
