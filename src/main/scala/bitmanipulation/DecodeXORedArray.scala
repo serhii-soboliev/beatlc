@@ -7,6 +7,13 @@ package bitmanipulation
  */
 
 class DecodeXORedArray {
+
+    def decodeFunctional(encoded: Array[Int], first: Int): Array[Int] = {
+        var r = Array(first)
+        encoded.foreach{i => r = r:+(r.last ^ i)}
+        r
+    }
+
     def decodeIterative(encoded: Array[Int], first: Int): Array[Int] = {
         import scala.collection.mutable.ArrayBuffer
         val res = ArrayBuffer(first)
