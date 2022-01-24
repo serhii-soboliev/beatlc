@@ -8,6 +8,8 @@ package bitmanipulation
 
 class DecodeXORedArray {
 
+    def decode(encoded: Array[Int], first: Int): Array[Int] = encoded.scanLeft(first)((x,y) => x^y)
+
     def decodeFunctional(encoded: Array[Int], first: Int): Array[Int] = {
         var r = Array(first)
         encoded.foreach{i => r = r:+(r.last ^ i)}
