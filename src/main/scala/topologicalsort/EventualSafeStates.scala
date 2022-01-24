@@ -45,8 +45,8 @@ class EventualSafeStates {
         }
 
         safe.zipWithIndex
-          .filter { case (data, index) => data }
-          .map { case (data, index) => index }
+          .filter { case (data, _) => data }
+          .map { case (_, index) => index }
           .toList
     }
 }
