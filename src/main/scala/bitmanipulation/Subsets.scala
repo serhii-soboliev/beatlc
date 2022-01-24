@@ -1,8 +1,6 @@
 package org.sbk.leet
 package bitmanipulation
 
-import scala.collection.IterableOnce.iterableOnceExtensionMethods
-import scala.collection.mutable
 
 /*
     78. Subsets
@@ -12,10 +10,16 @@ import scala.collection.mutable
 class Subsets {
 
     def subsets(nums: Array[Int]): List[List[Int]] = {
+        if (nums.isEmpty) return List(List())
+        val next = subsets(nums.tail)
+        next ::: next.map(_ :+ nums.head)
+    }
+
+    def subsetsBitManipulation(nums: Array[Int]): List[List[Int]] = {
 
         def createPermutation(a: Array[Int], n: Int): List[Int] = {
 
-            def isSet(n: Int, k: Int) : Boolean = ((1 << k) & n) > 0
+            def isSet(n: Int, k: Int) : Boolean = ((n >> k) & 1) > 0
 
             a.zipWithIndex
               .filter{ case (_,i) => isSet(n, i)}
