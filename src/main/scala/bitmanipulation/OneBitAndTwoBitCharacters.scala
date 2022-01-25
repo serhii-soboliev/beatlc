@@ -6,7 +6,6 @@ package bitmanipulation
 https://leetcode.com/problems/1-bit-and-2-bit-characters/
  */
 
-
 class OneBitAndTwoBitCharacters {
     def isOneBitCharacter(bits: Array[Int]): Boolean = {
         var currentPosition = 0
