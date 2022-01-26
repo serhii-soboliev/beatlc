@@ -15,7 +15,7 @@ class SingleNumber2 {
           .map(i => nums.map(n => (n >> i) & 1).sum % 3)
           .toArray
           .zipWithIndex
-          .map(v => v._1 * Math.pow(2, v._2).toInt)
+          .map(v => v._1 << v._2)
           .sum
     }
 

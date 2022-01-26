@@ -6,7 +6,7 @@ import org.scalatest.matchers.should.Matchers
 
 class SingleNumber2Spec extends AnyFlatSpec with Matchers{
 
-    ignore should "-4" in {
+    "SingleNumber2.singleNumber(Array(-2,-2,1,1,4,1,4,4,-4,-2))" should "-4" in {
         new SingleNumber2().singleNumber(Array(-2,-2,1,1,4,1,4,4,-4,-2)) should equal (-4)
     }
 
