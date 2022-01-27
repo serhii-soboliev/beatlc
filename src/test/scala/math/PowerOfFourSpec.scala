@@ -18,5 +18,4 @@ class PowerOfFourSpec extends AnyFlatSpec with Matchers {
         new PowerOfFour().isPowerOfFour(71) should be (false)
     }
 
-
 }
