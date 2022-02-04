@@ -8,7 +8,25 @@ https://leetcode.com/problems/contains-duplicate-ii/
  */
 class ContainsDuplicateII {
 
-    def containsNearbyDuplicate(nums: Array[Int], k: Int): Boolean = {
+    def containsNearbyDuplicate(nums: Array[Int], maxDiff: Int): Boolean = {
+
+        def existDiffWithinConstraint(indices: Array[Int]): Boolean =
+            indices
+              .sliding(2)
+              .map {
+                  case Array(x, y) => y - x <= maxDiff
+                  case _           => false
+              }.exists(identity)
+
+         nums
+          .zipWithIndex
+          .groupBy(_._1)  // use `HashMap` implicitly: value to indices map
+          .values         // already grouped, no longer need key (element value) parts
+          .map(v => existDiffWithinConstraint(v.map(_._2)))
+          .exists(identity)
+    }
+
+    def containsNearbyDuplicateFold(nums: Array[Int], k: Int): Boolean = {
         import scala.collection.mutable
         val map = mutable.HashMap.empty[Int, List[Int]]
 
