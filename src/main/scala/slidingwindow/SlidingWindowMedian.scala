@@ -5,9 +5,36 @@ import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 /*
-480. Sliding Window Median
-https://leetcode.com/problems/sliding-window-median/
+295. Find Median from Data Stream
+https://leetcode.com/problems/find-median-from-data-stream/
  */
+
+class MedianFinder() {
+
+    private val minHeap: mutable.PriorityQueue[Int] = new mutable.PriorityQueue[Int]()(Ordering[Int].reverse)
+    private val maxHeap: mutable.PriorityQueue[Int] = new mutable.PriorityQueue[Int]()
+
+    def balanceHeaps(): Unit = {
+        if (maxHeap.size > minHeap.size + 1) {
+            minHeap += maxHeap.dequeue()
+        } else if (maxHeap.size < minHeap.size) {
+            maxHeap += minHeap.dequeue()
+        }
+    }
+
+    def addNum(num: Int): Unit = {
+        if (maxHeap.isEmpty || maxHeap.head >= num) maxHeap.enqueue(num)
+        else minHeap.enqueue(num)
+        balanceHeaps()
+    }
+
+    def findMedian(): Double = {
+        if (maxHeap.size == minHeap.size)  (maxHeap.head.toDouble + minHeap.head) / 2
+        else maxHeap.head
+    }
+
+}
+
 
 class MedianHeap {
 
