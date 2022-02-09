@@ -11,8 +11,8 @@ https://leetcode.com/problems/sliding-window-median/
 
 class MedianHeap {
 
-    private val minHeap: mutable.PriorityQueue[Int] = new mutable.PriorityQueue[Int]()(Ordering[Int].reverse)
-    private val maxHeap: mutable.PriorityQueue[Int] = new mutable.PriorityQueue[Int]()
+    private var minHeap: mutable.PriorityQueue[Int] = new mutable.PriorityQueue[Int]()(Ordering[Int].reverse)
+    private var maxHeap: mutable.PriorityQueue[Int] = new mutable.PriorityQueue[Int]()
 
     def this(nums: Seq[Int]) = {
         this()
@@ -36,14 +36,17 @@ class MedianHeap {
     }
 
     def remove(x: Int) : Unit = {
-        if(x <= maxHeap.head) {
-            var filtered = false
-            maxHeap.filter(v => !filtered && {val ok = v==x; if (!ok) filtered = true; ok})
-        } else {
-            var filtered = false
-            minHeap.filter(v => !filtered && {val ok = v==x; if (!ok) filtered = true; ok})
+
+        def removeFirstElementOccurrence[A](xs: mutable.PriorityQueue[A])(p: A => Boolean) = {
+            var found = false
+            xs.filter(x => found || !p(x) || { found=true; false })
         }
 
+        if(x <= maxHeap.head) {
+            maxHeap = removeFirstElementOccurrence(maxHeap)(_ == x)
+        } else {
+            minHeap = removeFirstElementOccurrence(minHeap)(_ == x)
+        }
     }
 
     def findMedian(): Double = {
