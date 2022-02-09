@@ -47,6 +47,7 @@ class MedianHeap {
         } else {
             minHeap = removeFirstElementOccurrence(minHeap)(_ == x)
         }
+        balanceHeaps()
     }
 
     def findMedian(): Double = {
@@ -55,20 +56,21 @@ class MedianHeap {
     }
 }
 
-
 class SlidingWindowMedian {
 
-
-
     def medianSlidingWindow(nums: Array[Int], k: Int): Array[Double] = {
-//        (0 until k) foreach {
-//
-//        }
-//        val res = new ArrayBuffer[Double]
-//        res.toArray
-        null
+        val res = new ArrayBuffer[Double]
+        val mh = new MedianHeap(nums.slice(0, k))
+        res += mh.findMedian()
+        (k until nums.length) foreach {
+            i => {
+                mh.insert(nums(i))
+                mh.remove(nums(i - k))
+                res += mh.findMedian()
+            }
+        }
+        res.toArray
     }
-
 
 }
 
