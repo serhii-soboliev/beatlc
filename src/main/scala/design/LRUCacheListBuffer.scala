@@ -5,7 +5,7 @@ package design
 146. LRU Cache
 https://leetcode.com/problems/lru-cache/
  */
-class LRUCache(capacity: Int) {
+class LRUCacheListBuffer(capacity: Int) {
 
     import scala.collection.mutable.ListBuffer
 

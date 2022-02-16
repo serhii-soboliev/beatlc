@@ -5,11 +5,10 @@ import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
 
-
-class LRUCacheSpec extends AnyFlatSpec with Matchers{
+class LRUCacheLinkedHashMapSpec extends AnyFlatSpec with Matchers{
 
     "LRUCacheSpec" should "scenario 1" in {
-        val lRUCache = new LRUCacheListBuffer(2)
+        val lRUCache = new LRUCacheLinkedHashMap(2)
         lRUCache.put(1, 1)
         lRUCache.put(2, 2)
         lRUCache.get(1) should equal (1)
@@ -22,7 +21,7 @@ class LRUCacheSpec extends AnyFlatSpec with Matchers{
     }
 
     "LRUCacheSpec" should "scenario 2" in {
-        val lRUCache = new LRUCacheListBuffer(2)
+        val lRUCache = new LRUCacheLinkedHashMap(2)
         lRUCache.get(2)
         lRUCache.put(2, 6)
         lRUCache.get(1) should equal (-1)
@@ -33,14 +32,14 @@ class LRUCacheSpec extends AnyFlatSpec with Matchers{
     }
 
     "LRUCacheSpec" should "scenario 3" in {
-        val lRUCache = new LRUCacheListBuffer(2)
+        val lRUCache = new LRUCacheLinkedHashMap(2)
         lRUCache.put(2, 1)
         lRUCache.put(1, 1)
         lRUCache.put(2, 3)
         lRUCache.put(4, 1)
         lRUCache.get(1) should equal (-1)
         lRUCache.get(2) should equal (3)
-
     }
+
 
 }
