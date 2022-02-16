@@ -10,17 +10,16 @@ class LRUCacheLinkedHashMap(capacity: Int) {
 
     private val cache = new mutable.LinkedHashMap[Int, Int]()
 
-    def get(key: Int): Int = {
-        cache.get(key).map({ v =>
-            cache.remove(key)
-            cache(key) = v
-            return v
-        }).getOrElse(-1)
+    def get(key: Int):Int = cache.remove(key) match {
+        case None => -1
+        case Some(value) =>
+            cache.put(key, value)
+            value
     }
 
     def put(key: Int, value: Int): Unit = {
-        cache.remove(key)
-        cache(key) = value
+        cache.put(key, value)
+        get(key)
         if (cache.size > capacity) {
             cache.remove(cache.head._1)
         }
