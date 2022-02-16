@@ -20,8 +20,8 @@ class LFUCache(capacity: Int) {
             val count = keyUsageCount(key)
             keyUsageCount(key) = count + 1
             freqMap.getOrElse(count, new mutable.LinkedHashSet[Int]()).remove(key)
-            if(count == min && freqMap.get(count).isEmpty) min += 1
-            freqMap(min) = freqMap.getOrElse(min, new mutable.LinkedHashSet[Int]()) + key
+            if(count == min && !freqMap.contains(count)) min += 1
+            freqMap(min) = freqMap.getOrElse(min, new mutable.LinkedHashSet[Int]()).addOne(key)
             v
         }).getOrElse(-1)
     }
@@ -42,7 +42,7 @@ class LFUCache(capacity: Int) {
         cache(key) = value
         keyUsageCount(key) = 1
         min = 1
-        freqMap(min) = freqMap.getOrElse(min, new mutable.LinkedHashSet[Int]()) + key
+        freqMap(min) = freqMap.getOrElse(min, new mutable.LinkedHashSet[Int]()).addOne(key)
     }
 
 
