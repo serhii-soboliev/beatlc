@@ -20,8 +20,6 @@ class LRUCacheLinkedHashMap(capacity: Int) {
     def put(key: Int, value: Int): Unit = {
         cache.put(key, value)
         get(key)
-        if (cache.size > capacity) {
-            cache.remove(cache.head._1)
-        }
+        if (cache.size > capacity) cache.remove(cache.head._1)
     }
 }
