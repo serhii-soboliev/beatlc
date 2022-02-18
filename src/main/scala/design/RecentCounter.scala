@@ -12,7 +12,7 @@ class RecentCounter {
     val n = 3000
     var range = new ListBuffer[Int]()
     def ping(t: Int): Int = {
-        range = range += t
+        range += t
         range.dropWhileInPlace(_ < t - n)
         range.size
     }
