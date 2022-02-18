@@ -1,5 +1,5 @@
 package org.sbk.leet
-package design
+package design.lfu
 
 /*
 460. LFU Cache

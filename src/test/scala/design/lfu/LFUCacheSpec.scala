@@ -1,5 +1,5 @@
 package org.sbk.leet
-package design
+package design.lfu
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers

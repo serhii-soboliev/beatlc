@@ -1,5 +1,5 @@
 package org.sbk.leet
-package design
+package design.freqstack
 
 class FreqStackPQ() {
     import scala.collection.mutable

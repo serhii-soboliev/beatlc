@@ -1,9 +1,8 @@
 package org.sbk.leet
-package design
+package design.lru
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-
 
 
 class LRUCacheSpec extends AnyFlatSpec with Matchers{

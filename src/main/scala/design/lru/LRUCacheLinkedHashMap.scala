@@ -1,5 +1,5 @@
 package org.sbk.leet
-package design
+package design.lru
 
 /*
 146. LRU Cache

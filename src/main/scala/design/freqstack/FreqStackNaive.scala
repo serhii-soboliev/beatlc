@@ -1,5 +1,5 @@
 package org.sbk.leet
-package design
+package design.freqstack
 
 /*
 895. Maximum Frequency Stack
@@ -7,8 +7,8 @@ https://leetcode.com/problems/maximum-frequency-stack/
  */
 class FreqStackNaive {
 
-    import scala.collection.mutable.ListBuffer
     import scala.collection.mutable
+    import scala.collection.mutable.ListBuffer
 
     private val stack = new ListBuffer[Int]()
     private val entryFreq = new mutable.HashMap[Int, Int]()
