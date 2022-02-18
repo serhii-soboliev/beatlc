@@ -4,10 +4,10 @@ package design
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class MaximumFrequencyStackSpec extends AnyFlatSpec with Matchers{
+class FreqStackSpec extends AnyFlatSpec with Matchers{
 
-    "MaximumFrequencyStack" should "scenario 1" in {
-        val freqStack = new FreqStackNaive()
+    "FreqStack" should "scenario 1" in {
+        val freqStack = new FreqStack()
         freqStack.push(5)
         freqStack.push(7)
         freqStack.push(5)
