@@ -25,7 +25,7 @@ class MinStack {
     }
 
     def top(): Int = {
-        stack.head
+        stack.top
     }
 
     def getMin(): Int = {
