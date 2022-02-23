@@ -12,24 +12,27 @@ class Bank(balance: Array[Long]) {
     private val accounts: mutable.Map[Int, Long] = balance.zipWithIndex.map{ case(i,j) => (j+1,i)}.to(mutable.Map)
 
     def transfer(account1: Int, account2: Int, money: Long): Boolean = {
-        if(!accounts.contains(account1) || !accounts.contains(account2)) return false
-        if(accounts(account1) < money) return false
-        accounts(account1) = accounts(account1) - money
-        accounts(account2) = accounts(account2) + money
-        true
+        accounts.get(account1).filter(v1 => v1 >= money).map(_ => {
+            accounts.get(account2).map(_ => {
+                accounts(account1) -= money
+                accounts(account2) += money
+                true
+            }).orElse(Option(false)).get
+        }).orElse(Option(false)).get
     }
 
     def deposit(account: Int, money: Long): Boolean = {
-        if(!accounts.contains(account)) return false
-        accounts(account) = accounts(account) + money
-        true
+        accounts.get(account).map(v => {
+            accounts(account) = v + money
+            true
+        }).orElse(Option(false)).get
     }
 
     def withdraw(account: Int, money: Long): Boolean = {
-        if(!accounts.contains(account)) return false
-        if(accounts(account) < money) return false
-        accounts(account) = accounts(account) - money
-        true
+        accounts.get(account).filter(v => v >= money).map(v => {
+            accounts(account) = v - money
+            true
+        }).orElse(Option(false)).get
     }
 
 

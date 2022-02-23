@@ -15,4 +15,11 @@ class BankSpec extends AnyFlatSpec with Matchers {
         bank.transfer(3, 4, 15) should be (false)
         bank.withdraw(10, 50) should be (false)
     }
+
+    "Bank" should "scenario 2" in {
+        val bank = new Bank(Array(0))
+        bank.deposit(1, 2) should be (true)
+        bank.transfer(1, 1, 1) should be (true)
+        bank.transfer(1, 1, 3) should be (false)
+    }
 }
