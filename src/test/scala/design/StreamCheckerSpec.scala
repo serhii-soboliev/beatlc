@@ -7,7 +7,7 @@ import org.scalatest.matchers.should.Matchers
 class StreamCheckerSpec extends AnyFlatSpec with Matchers {
 
     "StreamChecker" should "scenario 1" in {
-        val streamChecker = new StreamChecker(Array("cd", "f", "kl"))
+        val streamChecker = new StreamCheckerNaive(Array("cd", "f", "kl"))
         streamChecker.query('a') should be (false) // return False
         streamChecker.query('b') should be (false) // return False
         streamChecker.query('c') should be (false) // return False
