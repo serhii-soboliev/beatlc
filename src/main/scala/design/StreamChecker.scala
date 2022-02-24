@@ -33,10 +33,19 @@ class Trie() {
     def insert(key: String) : Unit = {
         var crawl = root
         key foreach ( c=> {
-            val child = crawl.children.getOrElse(c, new TrieNode())
-            crawl = child
+            if(!crawl.children.contains(c)) crawl.children(c) = new TrieNode()
+            crawl = crawl.children(c)
         })
         crawl.isEndOfWord = true
+    }
+
+    def search(key: String) : Boolean = {
+        var crawl = root
+        key foreach( c=> {
+            if(!crawl.children.contains(c)) return false
+            crawl = crawl.children(c)
+        })
+        true
     }
 }
 
