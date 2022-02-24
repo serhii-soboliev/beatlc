@@ -13,6 +13,6 @@ class TrieSpec extends AnyFlatSpec with Matchers {
         trie.search("kl") should be (true)
         trie.search("nn") should be (false)
         trie.search("kn") should be (false)
-        trie.search("") should be (true)
+        trie.search("") should be (false)
     }
 }

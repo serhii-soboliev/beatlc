@@ -2,15 +2,28 @@ package org.sbk.leet
 package design
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 /*
 1032. Stream of Characters
 https://leetcode.com/problems/stream-of-characters/
  */
-class StreamChecker(_words: Array[String]) {
+class StreamChecker(words: Array[String]) {
 
-    def query(letter: Char): Boolean = {
-        true
+    val trie = new Trie(words)
+    var pointers = new ListBuffer[TrieNode]()
+
+    def query(l: Char): Boolean = {
+        pointers = pointers
+          .flatMap(p => p.children)
+          .filter{case(c,_) => c == l}
+          .map{case(_,t) => t}
+          .to(ListBuffer)
+
+        trie.root.children.get(l).foreach(v => {
+            pointers += v
+        })
+        pointers.exists(tn => tn.isEndOfWord)
     }
 
 }
@@ -18,7 +31,6 @@ class StreamChecker(_words: Array[String]) {
 class TrieNode() {
     val children = new mutable.HashMap[Char, TrieNode]()
     var isEndOfWord = false
-
 }
 
 class Trie() {
@@ -28,7 +40,7 @@ class Trie() {
         words foreach(w => { this.insert(w) })
     }
 
-    private val root = new TrieNode()
+    val root = new TrieNode()
 
     def insert(key: String) : Unit = {
         var crawl = root
@@ -45,7 +57,7 @@ class Trie() {
             if(!crawl.children.contains(c)) return false
             crawl = crawl.children(c)
         })
-        true
+        crawl.isEndOfWord
     }
 }
 
