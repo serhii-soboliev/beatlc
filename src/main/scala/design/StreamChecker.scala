@@ -4,7 +4,7 @@ package design
 import scala.collection.mutable
 class StreamChecker(_words: Array[String]) {
 
-    val trie = new TrieNode
+    val trie = new MyTrieNode
     val stream: mutable.ArrayDeque[Char] = mutable.ArrayDeque[Char]()
     val max: Int = _words.max.length+1
 
@@ -12,7 +12,7 @@ class StreamChecker(_words: Array[String]) {
         var node = trie
         for(ch <- word.reverse) {
             if(!node.children.contains(ch))
-                node.children.put(ch, new TrieNode)
+                node.children.put(ch, new MyTrieNode)
             node = node.children(ch)
         }
         node.word = true
@@ -32,4 +32,4 @@ class StreamChecker(_words: Array[String]) {
     }
 }
 
-case class TrieNode(children: mutable.Map[Char, TrieNode] = mutable.Map[Char, TrieNode](), var word: Boolean = false )
+case class MyTrieNode(children: mutable.Map[Char, MyTrieNode] = mutable.Map[Char, MyTrieNode](), var word: Boolean = false )
