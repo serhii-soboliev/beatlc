@@ -1,6 +1,8 @@
 package org.sbk.leet
 package dfs
 
+import utils.TreeNode
+
 
 /*
 129. Sum Root to Leaf Numbers
@@ -36,8 +38,3 @@ class SumRootToLeafNumbers {
     }
 }
 
-class TreeNode(_value: Int = 0, _left: TreeNode = null, _right: TreeNode = null) {
-    var value: Int = _value
-    var left: TreeNode = _left
-    var right: TreeNode = _right
-}
