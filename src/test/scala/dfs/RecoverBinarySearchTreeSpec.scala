@@ -5,7 +5,7 @@ import utils.TreeNode
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class RecoverBinarySearchTreeSpec extends AnyFlatSpec with Matchers{
+class RecoverBinarySearchTreeSpec extends AnyFlatSpec with Matchers {
 
     "[1,3,null,null,2]" should "[3,1,null,null,2]" in {
         val t = new RecoverBinarySearchTree()
