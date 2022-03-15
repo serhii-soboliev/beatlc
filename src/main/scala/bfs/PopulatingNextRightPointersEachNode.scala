@@ -7,25 +7,31 @@ https://leetcode.com/problems/populating-next-right-pointers-in-each-node/
  */
 
 class PopulatingNextRightPointersEachNode {
-    def connect(root: Node): Node = {
+
+    def connect(root: Node): Node = root match {
+        case null => null
+        case _ =>
+            Option(root.left).map(_ => {
+                root.left.next = root.right
+                Option(root.next).map(_ => root.right.next = root.next.left)
+            })
+            connect(root.left)
+            connect(root.right)
+            root
+    }
+
+    def connectNaive(root: Node): Node = {
         Option(root).map(r => {
             import scala.collection.mutable
-            val q = new mutable.Queue[Node]()
-            q += r
+            val q = mutable.Queue(r)
             val new_q = new mutable.Queue[Node]()
             do {
                 new_q.removeAll()
                 var t = q.dequeue()
-                if (t.left != null) {
-                    new_q += t.left
-                    new_q += t.right
-                }
+                Option(t.left).map(_ => new_q.addAll(Array(t.left, t.right)))
                 while (q.nonEmpty) {
                     val k = q.dequeue()
-                    if (k.left != null) {
-                        new_q += k.left
-                        new_q += k.right
-                    }
+                    Option(k.left).map(_ => new_q.addAll(Array(k.left, k.right)))
                     t.next = k
                     t = k
                 }

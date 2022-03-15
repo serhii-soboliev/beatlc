@@ -11,7 +11,7 @@ class PopulatingNextRightPointersEachNodeSpec extends AnyFlatSpec with Matchers 
         val root = new Node(1,
             new Node(2, new Node(4), new Node(5)),
             new Node(3, new Node(6), new Node(7)))
-        ti.connect(root)
+        ti.connectNaive(root)
         root.next should be (null)
         root.left.next should be (root.right)
         root.right.next should be (null)
@@ -19,6 +19,17 @@ class PopulatingNextRightPointersEachNodeSpec extends AnyFlatSpec with Matchers 
 
     "PopulatingNextRightPointersEachNode" should "scenario #2" in {
         val ti = new PopulatingNextRightPointersEachNode()
-        ti.connect(null)
+        val root = new Node(1,
+            new Node(2, new Node(4), new Node(5)),
+            new Node(3, new Node(6), new Node(7)))
+        ti.connect(root)
+        root.next should be (null)
+        root.left.next should be (root.right)
+        root.right.next should be (null)
+    }
+
+    "PopulatingNextRightPointersEachNode" should "scenario #3" in {
+        val ti = new PopulatingNextRightPointersEachNode()
+        ti.connectNaive(null)
     }
 }
