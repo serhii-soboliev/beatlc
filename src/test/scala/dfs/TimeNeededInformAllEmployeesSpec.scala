@@ -16,4 +16,9 @@ class TimeNeededInformAllEmployeesSpec extends AnyFlatSpec with Matchers {
         ti.numOfMinutes(6,2,Array(2,2,-1,2,2,2), Array(0,0,1,0,0,0)) should be (1)
     }
 
+    "n = 6, headID = 2, manager = [2,3,-1,2,2,2], informTime = [0,1,1,0,0,0]" should "2" in {
+        val ti = new TimeNeededInformAllEmployees()
+        ti.numOfMinutes(6,2,Array(2,3,-1,2,2,2), Array(0,1,1,0,0,0)) should be (2)
+    }
+
 }
