@@ -14,7 +14,6 @@ class NaryTreePostorderTraversalSpec extends AnyFlatSpec with Matchers {
         val c = new Node(3)
         c.children = List(new Node(5), new Node(6))
         nd.children = List(c, new Node(2), new Node(4))
-
         nt.postorder(nd) should be (List(5,6,3,2,4,1))
     }
 }
