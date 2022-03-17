@@ -9,10 +9,18 @@ class TimeNeededInformAllEmployees {
 
     def numOfMinutes(n: Int, headID: Int, manager: Array[Int], informTime: Array[Int]): Int = {
 
-        val mm = manager.zipWithIndex.groupBy(_._1).view.mapValues(_.map(_._2)).toMap
+        val mm = manager
+          .zipWithIndex
+          .groupBy(_._1)
+          .view
+          .mapValues(_.map(_._2))
+          .toMap
 
         def findMaxTimeToInform(n: Int): Int = {
-            informTime(n) + mm.getOrElse(n, Array[Int]()).map(c => findMaxTimeToInform(c)).reduceOption(_ max _).getOrElse(0)
+            informTime(n) + mm.getOrElse(n, Array[Int]())
+              .map(c => findMaxTimeToInform(c))
+              .reduceOption(_ max _)
+              .getOrElse(0)
         }
 
         findMaxTimeToInform(headID)
