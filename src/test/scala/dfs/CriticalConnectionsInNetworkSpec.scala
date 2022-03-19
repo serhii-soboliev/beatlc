@@ -1,10 +1,11 @@
 package org.sbk.leet
 package dfs
 
+import org.scalatest.Ignore
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-
+@Ignore
 class CriticalConnectionsInNetworkSpec extends AnyFlatSpec with Matchers {
 
     "CriticalConnectionsInNetwork" should "scenario #1" in {
