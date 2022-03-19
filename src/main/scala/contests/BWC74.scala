@@ -44,16 +44,16 @@ class BWC74 {
         var max = 0
         var cnt = 1
         for (i <- 0 until s.length) {
-            if (s.charAt(i) == p.charAt(1)) ans += cnt
-            if (s.charAt(i) == p.charAt(0)) cnt += 1
+            if (s(i) == p(1)) ans += cnt
+            if (s(i) == p(0)) cnt += 1
         }
         max = Math.max(max, ans)
         ans = 0
         cnt = 1
 
         for (i <- s.length - 1 to 0 by -1) {
-            if (s.charAt(i) == p.charAt(0)) ans += cnt
-            if (s.charAt(i) == p.charAt(1)) cnt += 1
+            if (s(i) == p(0)) ans += cnt
+            if (s(i) == p(1)) cnt += 1
         }
         max = Math.max(max, ans)
         max
