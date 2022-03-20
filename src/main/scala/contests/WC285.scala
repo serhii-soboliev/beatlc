@@ -9,8 +9,8 @@ class WC285 {
     def countHillValley(nums: Array[Int]): Int = {
         var r = 0
         var left = nums(0)
-        (1 until nums.length-1).foreach(i => {
-            if((left < nums(i) && nums(i) > nums(i+1)) || (left > nums(i) && nums(i) < nums(i+1))) {
+        (1 until nums.length - 1).foreach(i => {
+            if ((left < nums(i) && nums(i) > nums(i + 1)) || (left > nums(i) && nums(i) < nums(i + 1))) {
                 left = nums(i)
                 r += 1
             }
@@ -28,7 +28,7 @@ class WC285 {
         directions.foreach {
             case 'R' => carsMoving += 1
             case 'L' =>
-                if(carsMoving > 0) {
+                if (carsMoving > 0) {
                     collisions += (carsMoving + 1)
                     isCarStaying = true
                 } else if (isCarStaying) {
@@ -37,7 +37,7 @@ class WC285 {
                 carsMoving = 0
             case 'S' =>
                 isCarStaying = true
-                if(carsMoving > 0) collisions += carsMoving
+                if (carsMoving > 0) collisions += carsMoving
                 carsMoving = 0
 
         }
@@ -56,8 +56,8 @@ class WC285 {
         var nA = numArrows
         val ans = Array.fill[Int](12)(0)
         var remainBobArrows = nA
-        (0 until 12) foreach(k => {
-            if(dp(k, nA) != dp(k+1, nA)) {
+        (0 until 12) foreach (k => {
+            if (dp(k, nA) != dp(k + 1, nA)) {
                 ans(k) = aliceArrows(k) + 1
                 nA -= ans(k)
                 remainBobArrows -= ans(k)
@@ -73,15 +73,15 @@ class WC285 {
             var remainingArrows = numArrows
             val ar = Array.fill[Int](12)(0)
             var score: Int = 0
-            (0 until 12).foreach(k => {
-                if(((mask >> k) & 1) == 1) {
-                    val arrowsNeeded = aliceArrows(k) + 1
-                    if(remainingArrows < arrowsNeeded) return (0, Array())
-                    score += k
-                    ar(k) = arrowsNeeded
-                    remainingArrows -= arrowsNeeded
-                }
-            })
+            (0 until 12)
+              .filter(k => ((mask >> k) & 1) == 1)
+              .foreach(k => {
+                  val arrowsNeeded = aliceArrows(k) + 1
+                  if (remainingArrows < arrowsNeeded) return (0, Array())
+                  score += k
+                  ar(k) = arrowsNeeded
+                  remainingArrows -= arrowsNeeded
+              })
             ar(0) += remainingArrows
             (score, ar)
         }
@@ -92,12 +92,12 @@ class WC285 {
 }
 
 object WC285 {
-    def main(args: Array[String]):Unit = {
+    def main(args: Array[String]): Unit = {
         val c = new WC285()
         val t = c.maximumBobPoints(9, Array(1, 1, 0, 1, 0, 0, 2, 1, 0, 1, 2, 0))
         println(c.countCollisions("LLRR"))
         println(c.countCollisions("RLRSLL"))
         print(c.countHillValley(Array(6, 6, 5, 5, 4, 1)))
-        print(c.countHillValley(Array(2,4,1,1,6,5)))
+        print(c.countHillValley(Array(2, 4, 1, 1, 6, 5)))
     }
 }
