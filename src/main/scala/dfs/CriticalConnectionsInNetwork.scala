@@ -10,30 +10,31 @@ class CriticalConnectionsInNetwork {
     def criticalConnections(n: Int, connections: List[List[Int]]): List[List[Int]] = {
         import scala.collection.mutable
         import scala.collection.mutable._
+        var time = 0
         val graph = new mutable.HashMap[Int, ListBuffer[Int]]()
-        val ans = new mutable.HashSet[List[Int]]()
-        val labels = Array.fill[Int](n)(-1)
+        val result = new ListBuffer[List[Int]]()
+        val visited = Array.fill[Boolean](n)(false)
+        val timestamp = Array.fill[Int](n)(0)
 
-        def dfs(u: Int, parent: Int, preLabel: Int): Int =  {
-            if(labels(u) > 0) return labels(u)
-            labels(u) = preLabel + 1
-            var minLabel = Int.MaxValue
-            graph(u).filter(v => v != parent) foreach(v => {
-                val recursiveLabel = dfs(v, u, labels(u))
-                if(labels(u) >= recursiveLabel) ans.remove(List(u min v, u max v))
-                minLabel = minLabel min recursiveLabel
+        def dfs(vertex: Int, prev: Int): Unit =  {
+            visited(vertex) = true
+            time += 1
+            timestamp(vertex) = time
+            val curTimeStamp = timestamp(vertex)
+            graph(vertex).filter(v => v != prev).foreach(v => {
+                if(!visited(v)) dfs(v, vertex)
+                timestamp(vertex) = timestamp(vertex) min timestamp(v)
+                if(curTimeStamp < timestamp(v)) result += List(vertex,v)
             })
-            minLabel
         }
-        connections foreach (
-            l => {
+
+        connections foreach (l => {
                 graph(l.head) = graph.getOrElse(l.head, new ListBuffer[Int]()) += l.last
                 graph(l.last) = graph.getOrElse(l.last, new ListBuffer[Int]()) += l.head
-                ans += List(l.head min l.last, l.head max l.last)
-            }
-          )
-        dfs(0, -1, 0)
-        ans.toList
+        })
+        dfs(0, -1)
+        result.toList
     }
+
 
 }
