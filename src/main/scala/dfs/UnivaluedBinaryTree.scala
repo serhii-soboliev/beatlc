@@ -10,11 +10,7 @@ https://leetcode.com/problems/univalued-binary-tree/
 class UnivaluedBinaryTree {
 
     def isUnivalTree(root: TreeNode): Boolean = {
-        val n = root.value
-        def dfs(tn: TreeNode): Boolean = {
-            if(tn == null) return true
-            (tn.value == n) && dfs(tn.left) && dfs(tn.right)
-        }
+        def dfs(tn: TreeNode): Boolean = Option(tn).forall(tnn => tnn.value == root.value && dfs(tn.left) && dfs(tn.right))
         dfs(root)
     }
 }
