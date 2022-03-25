@@ -9,18 +9,27 @@ https://leetcode.com/problems/flood-fill/
 class FloodFill {
 
     def floodFill(image: Array[Array[Int]], sr: Int, sc: Int, newColor: Int): Array[Array[Int]] = {
-        val v = image(sr)(sc)
-        val n = image.length
-        val m = image.headOption.get.length
+        import scala.collection.mutable.ArrayBuffer
 
-        def fillColor(i: Int, j: Int) : Unit = {
-            if(image(i)(j) != v) return
+        val v = image(sr)(sc)
+        if(v == newColor) return image
+
+        def fillColor(i: Int, j: Int): Unit = {
             image(i)(j) = newColor
-            if(i > 0 && image(i-1)(j) != newColor) fillColor(i-1, j)
-            if(i < n-1 && image(i+1)(j) != newColor) fillColor(i+1, j)
-            if(j > 0 && image(i)(j-1) != newColor) fillColor(i, j-1)
-            if(j < m-1 && image(i)(j+1) != newColor) fillColor(i, j+1)
+            getNeighbors(i, j)
+              .filter{case(k,l) => image(k)(l) == v}
+              .foreach{case(k,l) => fillColor(k,l)}
         }
+
+        def getNeighbors(i: Int, j:Int): Array[(Int, Int)] = {
+            val res = new ArrayBuffer[(Int, Int)]
+            if(i > 0) res.addOne(i-1, j)
+            if(i < image.length-1) res.addOne(i+1, j)
+            if(j > 0) res.addOne(i, j-1)
+            if(j < image.headOption.get.length-1) res.addOne(i, j+1)
+            res.toArray
+        }
+
         fillColor(sr, sc)
         image
     }
