@@ -9,9 +9,10 @@ https://leetcode.com/problems/number-of-islands/
  */
 class NumberOfIslands {
 
-    import scala.collection.mutable.ArrayBuffer
-
     def numIslands(grid: Array[Array[Char]]): Int = {
+
+        import scala.collection.mutable.ArrayBuffer
+
         var numIslands = 0
         val n = grid.length
         val m = grid.headOption.get.length
