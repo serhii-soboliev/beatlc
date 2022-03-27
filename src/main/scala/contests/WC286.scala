@@ -26,4 +26,13 @@ class WC286 {
         if((n - d) % 2 == 1) d +=1
         d
     }
+
+    def minDeletion2 (nums: Array[Int]): Int = {
+        def minDel: List[Int] => Int = {
+            case Nil => 0;
+            case _ :: Nil => 1
+            case x :: y :: xs => if (x == y) 1 + minDel (y :: xs) else minDel (xs)
+        }
+        minDel (nums.toList)
+    }
 }
