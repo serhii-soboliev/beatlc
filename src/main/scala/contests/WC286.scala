@@ -15,4 +15,17 @@ class WC286 {
         val hs2 = mutable.HashSet() ++ nums2
         List(hs1.diff(hs2).toList, hs2.diff(hs1).toList)
     }
+
+    /*
+        2216. Minimum Deletions to Make Array Beautiful
+     */
+    def minDeletion(nums: Array[Int]): Int = {
+        var d = 0
+        (0 until nums.length - 1).foreach(i => {
+            val j = i - d
+            if((j % 2 == 0) && (nums(i) == nums(i+1))) d += 1
+        })
+        if((nums.length - d) % 2 == 1) d +=1
+        d
+    }
 }
