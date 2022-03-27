@@ -21,11 +21,9 @@ class WC286 {
      */
     def minDeletion(nums: Array[Int]): Int = {
         var d = 0
-        (0 until nums.length - 1).foreach(i => {
-            val j = i - d
-            if((j % 2 == 0) && (nums(i) == nums(i+1))) d += 1
-        })
-        if((nums.length - d) % 2 == 1) d +=1
+        val n = nums.length
+        (0 until n - 1).foreach(i => {if(((i - d) % 2 == 0) && (nums(i) == nums(i+1))) d += 1})
+        if((n - d) % 2 == 1) d +=1
         d
     }
 }
