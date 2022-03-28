@@ -2,8 +2,6 @@ package org.sbk.leet
 package contests
 
 
-
-
 class WC286 {
 
     /*
@@ -35,4 +33,32 @@ class WC286 {
         }
         minDel (nums.toList)
     }
+
+
+    /*
+    2217. Find Palindrome With Fixed Length
+     */
+    def kthPalindrome(queries: Array[Int], intLength: Int): Array[Long] = {
+        val base: Int = Math.pow(10, (intLength + 1) / 2 - 1).toInt
+        val end: Int = Math.pow(10,  (intLength + 1) / 2).toInt - 1
+        def getIthPalindrome(i: Int): Long = {
+            if(base + i - 1 > end) return -1
+            val v = (base + i - 1).toString
+            val r = if (intLength % 2 == 0) v.reverse else v.reverse.takeRight(v.length - 1)
+            val s = v + r
+            s.toLong
+        }
+        queries.map{i => getIthPalindrome(i)}
+    }
+}
+
+object WC286 {
+
+    def main(args: Array[String]): Unit = {
+        val o = new WC286()
+        println(o.kthPalindrome(
+            Array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,9,8), 1
+        ).mkString("Array(", ", ", ")"))
+    }
+
 }
