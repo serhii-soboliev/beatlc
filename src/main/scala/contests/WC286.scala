@@ -38,7 +38,7 @@ class WC286 {
     /*
     2217. Find Palindrome With Fixed Length
      */
-    def kthPalindrome(queries: Array[Int], intLength: Int): Array[Long] = {
+    def kthPalindrome2(queries: Array[Int], intLength: Int): Array[Long] = {
         val base: Int = Math.pow(10, (intLength + 1) / 2 - 1).toInt
         val end: Int = Math.pow(10,  (intLength + 1) / 2).toInt - 1
         def getIthPalindrome(i: Int): Long = {
@@ -50,6 +50,13 @@ class WC286 {
         }
         queries.map{i => getIthPalindrome(i)}
     }
+
+    def kthPalindrome (queries: Array[Int], intLength: Int): Array[Long] = {
+        val begin = Math.pow(10, (intLength + 1) / 2 - 1).toInt
+        queries map (n => if (n > begin * 9) -1 else (begin + n - 1).toString match {
+            case str => (str.dropRight (intLength & 1) ++ str.reverse).toLong
+        })
+    }
 }
 
 object WC286 {
@@ -57,7 +64,7 @@ object WC286 {
     def main(args: Array[String]): Unit = {
         val o = new WC286()
         println(o.kthPalindrome(
-            Array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,9,8), 1
+            Array(1,2,3,4,5,90), 5
         ).mkString("Array(", ", ", ")"))
     }
 
