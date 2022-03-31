@@ -41,7 +41,6 @@ class NumberOfEnclaves {
             if (isEnclave) enclaveNumber else 0
         }
 
-
         def countEnclaves():  Int = {
             var enclavesCount = 0
             for (i <- 0 until n; j <- 0 until m; if grid(i)(j) == 1) {
