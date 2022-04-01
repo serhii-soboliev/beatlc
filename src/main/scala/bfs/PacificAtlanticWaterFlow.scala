@@ -9,16 +9,13 @@ class PacificAtlanticWaterFlow {
 
     def pacificAtlantic(heights: Array[Array[Int]]): List[List[Int]] = {
         import scala.collection.mutable
-        import scala.collection.mutable.ListBuffer
 
         val n = heights.length
         val m = heights.headOption.get.length
         val dirs = Array((0,-1), (0, 1), (1, 0), (-1,0))
 
-        val visitedP = Array.fill[Array[Int]](n)(Array.fill[Int](m)(-1))
-        val visitedA = Array.fill[Array[Int]](n)(Array.fill[Int](m)(-1))
-        val pQ = mutable.Queue[(Int, Int)]()
-        val aQ = mutable.Queue[(Int, Int)]()
+        val visitedP, visitedA = Array.fill[Array[Int]](n)(Array.fill[Int](m)(-1))
+        val pQ, aQ = mutable.Queue[(Int, Int)]()
 
         for (i <- 0 until n) {
             pQ.addOne((i, 0))
@@ -59,11 +56,8 @@ class PacificAtlanticWaterFlow {
             })
         }
 
-        val res = ListBuffer[List[Int]]()
-        for {i <- 0 until n; j <- 0 until m; if visitedP(i)(j) == 1 && visitedA(i)(j) == 2} {
-            res += List(i, j)
-        }
-        res.toList
+        (for {i <- 0 until n; j <- 0 until m; if visitedP(i)(j) == 1 && visitedA(i)(j) == 2} yield List(i,j)).toList
+
     }
 
 }
