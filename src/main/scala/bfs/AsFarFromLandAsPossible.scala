@@ -7,7 +7,7 @@ https://leetcode.com/problems/as-far-from-land-as-possible/
  */
 class AsFarFromLandAsPossible {
 
-    def maxDistance(grid: Array[Array[Int]]): Int = {
+    def maxDistanceBFS(grid: Array[Array[Int]]): Int = {
         import scala.collection.mutable
 
         val n = grid.length

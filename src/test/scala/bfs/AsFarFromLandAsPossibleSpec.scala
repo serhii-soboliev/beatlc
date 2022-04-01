@@ -9,7 +9,7 @@ class AsFarFromLandAsPossibleSpec extends AnyFlatSpec with Matchers{
 
     "AsFarFromLandAsPossible #1" should "2" in {
         val ti = new AsFarFromLandAsPossible()
-        ti.maxDistance(Array(
+        ti.maxDistanceBFS(Array(
             Array(1,0,1),
             Array(0,0,0),
             Array(1,0,1)
@@ -18,7 +18,7 @@ class AsFarFromLandAsPossibleSpec extends AnyFlatSpec with Matchers{
 
     "AsFarFromLandAsPossible #2" should "4" in {
         val ti = new AsFarFromLandAsPossible()
-        ti.maxDistance(Array(
+        ti.maxDistanceBFS(Array(
             Array(1,0,0),
             Array(0,0,0),
             Array(0,0,0)
