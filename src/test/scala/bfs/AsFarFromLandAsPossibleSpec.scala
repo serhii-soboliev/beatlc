@@ -5,7 +5,7 @@ package bfs
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class AsFarFromLandAsPossibleSpec extends AnyFlatSpec with Matchers{
+class AsFarFromLandAsPossibleSpec extends AnyFlatSpec with Matchers {
 
     "AsFarFromLandAsPossible #1" should "2" in {
         val ti = new AsFarFromLandAsPossible()
