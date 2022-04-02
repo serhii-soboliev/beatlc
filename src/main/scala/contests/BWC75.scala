@@ -36,9 +36,9 @@ class BWC75 {
         val totalOnes = s.length - totalZeros
         var curZeros = if(s(0) == '0') 1 else 0
         var curOnes = 1 - curZeros
-        val res:Long = (1 until s.length-1).map(i => {
+        s.slice(1, s.length-1).map(c => {
             var r: Long = 0
-            if(s(i) == '1') {
+            if(c == '1') {
                 curOnes += 1
                 r = curZeros * (totalZeros - curZeros)
             } else {
@@ -47,7 +47,6 @@ class BWC75 {
             }
             r
         }).sum
-        res
     }
 }
 
