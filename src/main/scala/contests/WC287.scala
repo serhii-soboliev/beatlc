@@ -66,9 +66,7 @@ class Encrypter(_keys: Array[Char], _values: Array[String], _dictionary: Array[S
 
     private val enc = (_keys zip _values).toMap
 
-    def encrypt(word1: String): String = {
-        word1.map(c => enc(c)).mkString
-    }
+    def encrypt(word1: String): String = word1.map(c => enc(c)).mkString
 
     private val count = _dictionary.map(d => encrypt(d))
       .groupBy(identity)
