@@ -9,7 +9,7 @@ class LastStoneWeight {
 
     def lastStoneWeight(stones: Array[Int]): Int = {
         import scala.collection.mutable
-        val pq =  mutable.PriorityQueue[Int]() ++ stones
+        val pq = mutable.PriorityQueue[Int]() ++ stones
         while(pq.size > 1) {
             val n = pq.dequeue() - pq.dequeue()
             if(n != 0) pq += n
