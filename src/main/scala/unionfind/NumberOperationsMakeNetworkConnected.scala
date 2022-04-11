@@ -1,6 +1,8 @@
 package org.sbk.leet
 package unionfind
 
+import scala.annotation.tailrec
+
 /*
 1319. Number of Operations to Make Network Connected
 https://leetcode.com/problems/number-of-operations-to-make-network-connected/
@@ -9,30 +11,35 @@ class NumberOperationsMakeNetworkConnected {
 
     def makeConnected(n: Int, connections: Array[Array[Int]]): Int = {
 
-        import scala.collection.mutable
-        if (connections.length < n - 1) return -1
-        var res = 0
-        val isConnected = Array.fill[Array[Int]](n)(Array.fill[Int](n)(0))
-        val visited = mutable.HashSet[Int]()
-
-        for (c <- connections) {
-            isConnected(c(0))(c(1)) = 1
-            isConnected(c(1))(c(0)) = 1
+        @tailrec
+        def getParent(n: Int, parent: Array[Int]): Int = {
+            if (parent(n) == -1) n
+            else getParent(parent(n), parent)
         }
 
-        def dfs(i: Int): Unit = {
-            for {j <- isConnected.indices; if isConnected(i)(j) == 1 && !visited.contains(j)} {
-                visited += j
-                dfs(j)
+        def union(n1: Int, n2: Int, parent: Array[Int]): Unit = {
+            val p1 = getParent(n1, parent)
+            val p2 = getParent(n2, parent)
+            if (p1 != p2) {
+                parent(p1) = p2
             }
         }
 
-        for (i <- isConnected.indices; if !visited.contains(i)) {
-            visited += i
-            res += 1
-            dfs(i)
+        val parent = Array.fill(n)(-1)
+        var extra = 0
+        connections.foreach { con =>
+            val n1 = con(0)
+            val n2 = con(1)
+            val p1 = getParent(n1, parent)
+            val p2 = getParent(n2, parent)
+            if (p1 != p2) union(n1, n2, parent)
+            else extra += 1
         }
-
-        res - 1
+        val parents = (0 until n).map(i => getParent(i, parent))
+        val distinctParentSize = parents.toSet.size
+        if (distinctParentSize == 0) 0
+        else if (distinctParentSize - 1 <= extra) distinctParentSize - 1
+        else -1
     }
+
 }
