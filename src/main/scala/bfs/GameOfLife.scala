@@ -17,7 +17,31 @@ class GameOfLife {
         val m = board.length
         val n = board.headOption.get.length
 
-        def isNeighbor(v:(Int, Int)): Boolean ={
+        def isNeighbor(v:(Int, Int)): Boolean = {
+            v._1 >= 0 && v._1 < m && v._2 >= 0 && v._2 < n && board(v._1)(v._2) % 2 == 1
+        }
+
+        def getNeighbors(i: Int, j: Int): Array[(Int, Int)] = {
+            val dirs = Array((-1,-1), (0, -1), (1, -1), (-1,0), (1,0), (-1,1), (0,1), (1,1))
+            dirs.map(d => (i + d._1, j + d._2)).filter(v => isNeighbor(v))
+        }
+
+        for {i <- 0 until m; j <- 0 until n} {
+            val neiCnt = getNeighbors(i, j).length
+            if(board(i)(j) % 2 == 0 && neiCnt == 3) board(i)(j) = 4
+            if(board(i)(j) % 2 == 1 && (3 < neiCnt || neiCnt < 2)) board(i)(j) = 3
+        }
+        for {i <- 0 until m; j <- 0 until n} {
+            if(board(i)(j) == 3) board(i)(j) = 0
+            if(board(i)(j) == 4) board(i)(j) = 1
+        }
+    }
+
+    def gameOfLife_(board: Array[Array[Int]]): Unit = {
+        val m = board.length
+        val n = board.headOption.get.length
+
+        def isNeighbor(v:(Int, Int)): Boolean = {
             v._1 >= 0 && v._1 < m && v._2 >= 0 && v._2 < n && board(v._1)(v._2) == 1
         }
 
