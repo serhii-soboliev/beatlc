@@ -2,15 +2,11 @@ package org.sbk.leet
 package bfs
 
 
-import scala.collection.mutable
-
-
 /*
 1129. Shortest Path with Alternating Colors
 https://leetcode.com/problems/shortest-path-with-alternating-colors/
  */
 class ShortestPathWithAlternatingColors {
-
 
     def shortestAlternatingPaths(n: Int, redEdges: Array[Array[Int]], blueEdges: Array[Array[Int]]): Array[Int] = {
 
@@ -49,8 +45,6 @@ class ShortestPathWithAlternatingColors {
         }
         res
     }
-
-
 
 }
 
