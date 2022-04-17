@@ -14,7 +14,7 @@ class WaterAndJugProblemSpec extends AnyFlatSpec with Matchers {
         new WaterAndJugProblem().canMeasureWater(1,2,3) should be (true)
     }
 
-    "1,2,3" should "true" in {
-        new WaterAndJugProblem().canMeasureWater(2,6,5) should be (true)
+    "2,6,5" should "false" in {
+        new WaterAndJugProblem().canMeasureWater(2,6,5) should be (false)
     }
 }
