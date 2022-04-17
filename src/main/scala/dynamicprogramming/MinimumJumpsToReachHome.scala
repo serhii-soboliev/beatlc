@@ -27,5 +27,4 @@ class MinimumJumpsToReachHome {
         -1
     }
 
-
 }
