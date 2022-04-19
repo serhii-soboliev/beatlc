@@ -48,6 +48,7 @@ class MinimumGeneticMutation {
 }
 
 object MinimumGeneticMutation {
+
     def main(args: Array[String]): Unit = {
         val w = new MinimumGeneticMutation()
         println(w.minMutation(start = "AACCGGTT", end = "AACCGGTA", bank = Array("AACCGGTA")))
@@ -57,7 +58,5 @@ object MinimumGeneticMutation {
         println(w.minMutation(start = "AACCGGTT", end = "AAACGGTA", bank = Array("AACCGATT","AACCGATA","AAACGATA","AAACGGTA")))
 
     }
-
-
 
 }
