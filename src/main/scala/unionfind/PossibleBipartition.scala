@@ -15,22 +15,22 @@ class PossibleBipartition {
          */
         import scala.collection.mutable
 
-        val m = mutable.HashMap[Int, mutable.HashSet[Int]]().withDefaultValue(mutable.HashSet[Int]())
+        val dislikesMap = mutable.HashMap[Int, mutable.HashSet[Int]]().withDefaultValue(mutable.HashSet[Int]())
 
         for(d <- dislikes) {
-            m.getOrElseUpdate(d(0), mutable.HashSet[Int]()) += d(1)
-            m.getOrElseUpdate(d(1), mutable.HashSet[Int]()) += d(0)
+            dislikesMap.getOrElseUpdate(d(0), mutable.HashSet[Int]()) += d(1)
+            dislikesMap.getOrElseUpdate(d(1), mutable.HashSet[Int]()) += d(0)
         }
 
         val colors = Array.fill[Int](n+1)(0)
 
-        def dfs(i: Int, color: Int) : Boolean = {
+        def tryToColor(i: Int, color: Int) : Boolean = {
             if(colors(i) != 0) return colors(i) == color
             colors(i) = color
-            m(i).forall(n => dfs(n, -color))
+            dislikesMap(i).forall(n => tryToColor(n, -color))
         }
 
-        (1 to n).forall(i => colors(i) != 0 || dfs(i, 1))
+        (1 to n).forall(i => colors(i) != 0 || tryToColor(i, 1))
 
     }
 
