@@ -9,7 +9,10 @@ https://leetcode.com/problems/possible-bipartition/
 class PossibleBipartition {
 
     def possibleBipartition(n: Int, dislikes: Array[Array[Int]]): Boolean = {
-
+        /*
+        Runtime: 1152 ms, faster than 100.00% of Scala online submissions for Possible Bipartition.
+        Memory Usage: 67.5 MB, less than 100.00% of Scala online submissions for Possible Bipartition.
+         */
         import scala.collection.mutable
 
         val m = mutable.HashMap[Int, mutable.HashSet[Int]]().withDefaultValue(mutable.HashSet[Int]())
@@ -24,13 +27,11 @@ class PossibleBipartition {
         def dfs(i: Int, color: Int) : Boolean = {
             if(colors(i) != 0) return colors(i) == color
             colors(i) = color
-            for(next <- m(i)) {
-                if(!dfs(next, -color)) return false
-            }
-            true
+            m(i).forall(n => dfs(n, -color))
         }
-        (1 to n).foreach(i => if(colors(i) == 0 && !dfs(i, 1)) return false)
-        true
+
+        (1 to n).forall(i => colors(i) != 0 || dfs(i, 1))
+
     }
 
 }
