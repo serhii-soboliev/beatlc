@@ -1,6 +1,8 @@
 package org.sbk.leet.programmingskills;
 
 import java.util.*;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /*
 191. Number of 1 Bits
@@ -45,7 +47,22 @@ public class ProgrammingSkills {
         return 0;
     }
 
+    /*
+    1779. Find Nearest Point That Has the Same X or Y Coordinate
+    https://leetcode.com/problems/find-nearest-point-that-has-the-same-x-or-y-coordinate/
+     */
+    public int nearestValidPoint(int x, int y, int[][] p) {
+        return IntStream.range(0, p.length)
+                .mapToObj(i -> new int[]{p[i][0], p[i][1], i, Math.abs(x - p[i][0]) + Math.abs(y - p[i][1])})
+                .filter(v -> v[0] == x || v[1] == y)
+                .sorted(Comparator.comparingInt(o -> o[3]))
+                .map(v -> v[2])
+                .findFirst()
+                .orElse(-1);
+    }
+
     public static void main(String[] args) {
-        System.out.println(new ProgrammingSkills().subtractProductAndSum(234));
+        System.out.println(new ProgrammingSkills().nearestValidPoint(3, 4, new int[][]{{1,2},{3,1},{2,4},{2,3},{4,4}}));
+        System.out.println(new ProgrammingSkills().nearestValidPoint(3, 4, new int[][]{{1,2}}));
     }
 }
