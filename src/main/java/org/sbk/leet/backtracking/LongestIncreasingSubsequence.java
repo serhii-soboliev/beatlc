@@ -1,32 +1,26 @@
 package org.sbk.leet.backtracking;
 
+import java.util.Arrays;
+
 /*
 300. Longest Increasing Subsequence
 https://leetcode.com/problems/longest-increasing-subsequence/
  */
 public class LongestIncreasingSubsequence {
 
-    int result;
-    int getLIS(int[] nums, int n) {
-        if(n == 1) {
-            return 1;
-        }
-        int answer, endingPoint = 1;
-        for(int i = 1; i < n; i++) {
-            answer = getLIS(nums, i);
-            if(nums[n - 1] > nums[i - 1] && answer > endingPoint - 1) {
-                endingPoint = answer + 1;
-            }
-        }
-        result = Math.max(result, endingPoint);
-        return endingPoint;
-    }
-
     public int lengthOfLIS(int[] nums) {
         int n = nums.length;
-        result = 1;
-        getLIS(nums, n);
-        return result;
+        if(n <= 1) return n;
+        int[] lis = new int[n];
+        Arrays.fill(lis, 1);
+        for(int i=0; i<n; i++) {
+            for(int j=0; j<i; j++) {
+                if(nums[j] < nums[i]) {
+                    lis[i] = Math.max(lis[i], lis[j] + 1);
+                }
+            }
+        }
+        return Arrays.stream(lis).max().orElse(0);
     }
 
 
