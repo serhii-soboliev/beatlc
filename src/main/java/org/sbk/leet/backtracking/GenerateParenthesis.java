@@ -11,6 +11,22 @@ public class GenerateParenthesis {
 
     public List<String> generateParenthesis(int n) {
         List<String> result = new ArrayList<>();
+        if(n == 0) {
+            result.add("");
+        } else {
+            for(int c = 0; c < n; ++c) {
+                for(String left: generateParenthesis(c)) {
+                    for(String right: generateParenthesis(n - c -1)) {
+                        result.add("(" + left + ")" + right);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public List<String> generateParenthesisBacktrack(int n) {
+        List<String> result = new ArrayList<>();
         backtrack(result, new StringBuilder(),0, 0, n);
         return result;
     }
