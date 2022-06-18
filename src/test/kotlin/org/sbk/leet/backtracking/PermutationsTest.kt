@@ -11,7 +11,7 @@ import org.hamcrest.Matchers.hasSize
 internal class PermutationsTest {
 
     @Test
-    fun testPermuteRecursive1() {
+    fun testPermuteRecursive() {
         val res = Permutations().permuteRecursive(intArrayOf(1,2,3))
         assertThat(res, hasSize(6))
         assertThat(res, containsInAnyOrder(arrayListOf(1,2,3),
