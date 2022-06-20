@@ -16,8 +16,10 @@ class Permutations {
             return arrayListOf(nums.toList())
         }
 
+        val result = mutableListOf<List<Int>>()
+        val visited = BooleanArray(nums.size) { false }
 
-        fun dfs(nums: IntArray, result: MutableList<List<Int>>, current: MutableList<Int>, visited: BooleanArray) {
+        fun dfs(current: MutableList<Int>) {
             if(current.size == nums.size) {
                 result.add(current.toList())
                 return
@@ -28,14 +30,14 @@ class Permutations {
                 }
                 visited[i] = true
                 current.add(nums[i])
-                dfs(nums, result, current, visited)
+                dfs(current)
                 visited[i] = false
                 current.removeLast()
             }
         }
 
-        val result = mutableListOf<List<Int>>()
-        dfs(nums, result, mutableListOf(), BooleanArray(nums.size) { false })
+
+        dfs(mutableListOf())
         return result
     }
 
