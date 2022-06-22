@@ -10,7 +10,7 @@ class RestoreIpAddress {
 
     fun restoreIpAddresses(s1: String): List<String> {
 
-        val validStrings = IntRange(0, 255).map { i -> i.toString() }.toSet()
+        val validStrings = IntRange(0, 255).map { i -> i.toString() }
 
         fun backtrack(s: String, n: Int ) : List<String> {
             if(s.isEmpty()){
@@ -39,8 +39,6 @@ class RestoreIpAddress {
 
             return result
         }
-
-
 
         return backtrack(s1, 4)
     }
