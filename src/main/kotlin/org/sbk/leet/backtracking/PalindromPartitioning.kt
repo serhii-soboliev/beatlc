@@ -1,12 +1,13 @@
 package org.sbk.leet.backtracking
 
+
 /*
 131. Palindrome Partitioning
 https://leetcode.com/problems/palindrome-partitioning/
  */
 class PalindromePartitioning {
 
-    fun partition(s: String): List<List<String>> {
+    fun partitionRecursiveBacktracking(s: String): List<List<String>> {
 
         if(s.isEmpty()) {
             return mutableListOf()
@@ -32,7 +33,7 @@ class PalindromePartitioning {
                 if(suffix.isEmpty()) {
                     accumulator += arrayListOf(prefix)
                 } else {
-                    val res = partition(suffix)
+                    val res = partitionRecursiveBacktracking(suffix)
                     for (r in res) {
                         val newRes = r.toMutableList()
                         newRes.add(0, prefix)
@@ -47,7 +48,49 @@ class PalindromePartitioning {
         return accumulator
     }
 
+    fun partition(s: String): List<List<String>> {
+        val len = s.length
+        val dp = Array(len) { BooleanArray(len) }
+        val result: MutableList<List<String>> = ArrayList()
+
+        fun dfs(start: Int, currentList: MutableList<String>) {
+            if (start >= s.length) result.add(ArrayList(currentList))
+            for (end in start until s.length) {
+                if (s[start] == s[end] && (end - start <= 2 || dp[start + 1][end - 1])) {
+                    dp[start][end] = true
+                    currentList.add(s.substring(start, end + 1))
+                    dfs( end + 1, currentList)
+                    currentList.removeAt(currentList.size - 1)
+                }
+            }
+        }
+
+        dfs(0, ArrayList())
+        return result
+    }
+
+    fun dfs(
+        result: MutableList<List<String>>,
+        s: String,
+        start: Int,
+        currentList: MutableList<String>,
+        dp: Array<BooleanArray>
+    ) {
+        if (start >= s.length) result.add(ArrayList(currentList))
+        for (end in start until s.length) {
+            if (s[start] == s[end] && (end - start <= 2 || dp[start + 1][end - 1])) {
+                dp[start][end] = true
+                currentList.add(s.substring(start, end + 1))
+                dfs(result, s, end + 1, currentList, dp)
+                currentList.removeAt(currentList.size - 1)
+            }
+        }
+    }
+
+
 }
+
+
 
 fun main() {
     val l = mutableListOf<Int>(2, 3, 4)
