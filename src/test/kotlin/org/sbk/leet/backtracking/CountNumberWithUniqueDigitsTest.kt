@@ -17,4 +17,10 @@ internal class CountNumberWithUniqueDigitsTest {
         assertEquals(CountNumberWithUniqueDigits().countNumbersWithUniqueDigitsBFS(2), 91)
         assertEquals(CountNumberWithUniqueDigits().countNumbersWithUniqueDigitsBFS(0), 1)
     }
+
+    @Test
+    fun testCountNumbersWithUniqueDigitsBacktrack() {
+        assertEquals(CountNumberWithUniqueDigits().countNumbersWithUniqueDigitsBacktrack(2), 91)
+        assertEquals(CountNumberWithUniqueDigits().countNumbersWithUniqueDigitsBacktrack(0), 1)
+    }
 }

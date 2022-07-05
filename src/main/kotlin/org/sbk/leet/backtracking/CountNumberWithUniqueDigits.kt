@@ -9,6 +9,25 @@ https://leetcode.com/problems/count-numbers-with-unique-digits/
  */
 class CountNumberWithUniqueDigits {
 
+    fun countNumbersWithUniqueDigitsBacktrack(n: Int): Int {
+        var count = 0
+
+        fun backtrack(state: BooleanArray) {
+            val digitsUsed = state.count{ it }
+            if(digitsUsed == n) return
+            for(i in 0..9) {
+                if(state[i] || (digitsUsed == 0 && i == 0)) continue
+                count += 1
+                state[i] = true
+                backtrack(state)
+                state[i] = false
+            }
+
+        }
+        backtrack(BooleanArray(10){ false })
+        return count + 1
+    }
+
     fun countNumbersWithUniqueDigits(n: Int): Int {
         if(n == 0) return 1
         var temp = 9
