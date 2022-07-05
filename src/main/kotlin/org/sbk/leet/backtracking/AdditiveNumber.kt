@@ -7,7 +7,7 @@ https://leetcode.com/problems/additive-number/
  */
 class AdditiveNumber {
 
-    fun isAdditiveNumber(num: String): Boolean {
+    fun isAdditiveNumberRecursive(num: String): Boolean {
 
         if(num.isEmpty() || num.length < 3) {
             return false
