@@ -22,27 +22,28 @@ class CountNumberWithUniqueDigits {
 
     fun countNumbersWithUniqueDigitsBFS(n: Int): Int {
         if(n == 0) return 1
-        val q: Queue<Set<Int>> = LinkedList()
-        q.add(HashSet())
+        val q: Queue<BooleanArray> = LinkedList()
+        q.add(BooleanArray(10){ false })
         var count = 0
         while(q.isNotEmpty()) {
             val r = q.remove()
-            if(r.size <= n) {
+            val digitsUsed = r.count{ it }
+            if(digitsUsed <= n) {
                 count += 1
-                if(r.size == n) {
+                if(digitsUsed == n) {
                     continue
                 }
             }
-            if(r.isNotEmpty() && !r.contains(0)) {
-                val newR = r.toHashSet()
-                newR += 0
-                q += newR
+            if(digitsUsed > 0 && !r[0]) {
+                r[0] = true
+                q += r.copyOf()
+                r[0] = false
             }
             for(i in 1..9) {
-                if(!r.contains(i)){
-                    val newR = r.toHashSet()
-                    newR += i
-                    q += newR
+                if(!r[i]){
+                    r[i] = true
+                    q += r.copyOf()
+                    r[i] = false
                 }
             }
         }
