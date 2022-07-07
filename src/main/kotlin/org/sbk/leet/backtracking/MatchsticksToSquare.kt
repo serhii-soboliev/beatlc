@@ -1,5 +1,7 @@
 package org.sbk.leet.backtracking
 
+
+
 /*
 473. Matchsticks to Square
 https://leetcode.com/problems/matchsticks-to-square/
@@ -7,6 +9,50 @@ https://leetcode.com/problems/matchsticks-to-square/
 class MatchsticksToSquare {
 
     fun makesquare(matchsticks: IntArray): Boolean {
+        if(matchsticks.isEmpty()) {
+            return false
+        }
+        val perimeter = matchsticks.sum()
+        if(perimeter % 4 != 0) {
+            return false
+        }
+
+        val possibleSquareSide = perimeter / 4
+        val l = matchsticks.size
+
+        fun backtrack(idx: Int, currentLength: Int, sidesToCollect: Int) : Boolean {
+            if(sidesToCollect == 0) {
+                return true
+            }
+
+            if(currentLength == possibleSquareSide) {
+                return backtrack(0, 0, sidesToCollect - 1)
+            }
+
+            if(currentLength > possibleSquareSide || idx == l) {
+                return false
+            }
+
+            if(matchsticks[idx] != 0) {
+                val temp = matchsticks[idx]
+                matchsticks[idx] = 0
+                if(backtrack(idx + 1, currentLength + temp, sidesToCollect)) {
+                    return true
+                }
+                matchsticks[idx] = temp
+            }
+
+            if(backtrack(idx + 1, currentLength, sidesToCollect)) {
+                return true
+            }
+
+            return false
+        }
+
+        return backtrack(0, 0, 3)
+    }
+
+    fun makesquareDFS(matchsticks: IntArray): Boolean {
         if(matchsticks.isEmpty()) {
             return false
         }
